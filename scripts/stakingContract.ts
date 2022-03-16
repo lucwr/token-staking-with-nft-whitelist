@@ -40,10 +40,10 @@ async function StakingContract() {
     console.log("balance after buying token", await BAT.connect(signer1).balanceOf(NFTHolder))
 
     console.log("approving tokens for Staking contract")
-    await BAT.connect(signer1).approve(stakingContract.address, "500000000000000000000")
+    await BAT.connect(signer1).approve(stakingContract.address, "300000000000000000000")
 
     console.log("Staking tokens")
-    await stakingContract.connect(signer1).stake("100000000000000000000")
+    await stakingContract.connect(signer1).stake("300000000000000000000")
 
     console.log("checking all stakings balance")
     console.log(await stakingContract.connect(signer1).checkAllStakeBalance())
@@ -58,9 +58,10 @@ async function StakingContract() {
     console.log("balance after getting half staked token back", await BAT.connect(signer1).balanceOf(NFTHolder))
 
     //updating stake amount
-    await BAT.connect(signer1).approve(stakingContract.address, "20000000000000000000")
-    await stakingContract.connect(signer1).stake("20000000000000000000")
-    console.log("balance after staking another 20 tokens", await BAT.connect(signer1).balanceOf(NFTHolder))
+    await BAT.connect(signer1).approve(stakingContract.address, "200000000000000000000")
+    await stakingContract.connect(signer1).stake("200000000000000000000")
+    console.log("balance after staking another 200 tokens", await BAT.connect(signer1).balanceOf(NFTHolder))
+    console.log(await stakingContract.connect(signer1).checkSingleStakeBalance(1))
 }
 
 // We recommend this pattern to be able to use async/await everywhere

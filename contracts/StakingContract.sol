@@ -27,7 +27,7 @@ contract StakingContract {
         Stakers storage o = stakerToStakes[msg.sender][currentStakeIndex++];
         require(stakerToStakes[msg.sender][currentStakeIndex].stakeAmount == 0, "you already have an existing stake");
         require (IERC721(BoredApeNFT).balanceOf(msg.sender) >= 1, "You're required to have at least 1 Bored Ape NFT");
-        require(_amountIn >= 100* 10**18, "You're required to stake at least 100 BAT tokens");
+        require(_amountIn >= 10* 10**18, "You're required to stake at least 10 BAT tokens");
         require (IERC20(BATtoken).transferFrom(msg.sender, address(this), _amountIn), "Insufficient funds");
         o.stakeOwner = msg.sender;
         o.stakeAmount = _amountIn;
@@ -50,13 +50,16 @@ contract StakingContract {
        } 
     }
 
-    function checkSingleStakeBalance(uint index) public returns(uint balance) {
+    function checkSingleStakeBalance(uint index) view public returns(uint balance) {
         // 259200
        Stakers storage o = stakerToStakes[msg.sender][index];
-       while(o.startStake - 2592000 >= 0){
-            balance = o.stakeAmount + ((o.stakeAmount * stakingPercent) / 100);
-            o.stakeAmount = balance;
-       }
+        if(block.timestamp- 2592000 >= o.startStake){
+       while( block.timestamp- 2592000 >= o.startStake){
+            balance += (o.stakeAmount + ((o.stakeAmount * stakingPercent) / 100));
+        }
+            } else {
+                balance += o.stakeAmount ; 
+            } 
     }
 
     function getAmount (uint _amount) external returns (bool){
