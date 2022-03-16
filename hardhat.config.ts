@@ -30,6 +30,17 @@ const config: HardhatUserConfig = {
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
+    ethereum: {
+      url: process.env.ETHEREUM_URL || "",
+      accounts:
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+    },
+    hardhat: {
+      forking: {
+        url: "https://speedy-nodes-nyc.moralis.io/929155a11ae2912742ddd55e/eth/mainnet/archive",
+      }
+    }
+
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS !== undefined,
