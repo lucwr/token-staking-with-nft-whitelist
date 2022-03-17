@@ -1,7 +1,7 @@
 import { ethers } from "hardhat";
 import { IERC20 } from "../typechain";
-const BATContract = "0x40a42Baf86Fc821f972Ad2aC878729063CeEF403"
-const ICU = "0x96F3Ce39Ad2BfDCf92C0F6E2C2CAbF83874660Fc"
+const BATContract = "0x0ed64d01D0B4B655E410EF1441dD677B695639E7"
+const ICU = "0x4bf010f1b9beDA5450a8dD702ED602A104ff65EE"
 async function DeployBAT_ICU() {
 
 // deploting the Bored ape tokens Initial coin offering 
