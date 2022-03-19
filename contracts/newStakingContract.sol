@@ -12,7 +12,6 @@ contract NewStakingContract {
         uint lastTimeStake;
     }
     uint minStakePeriod = 3 days;
-    uint currentStakeIndex = 0;
     address BoredApeNFT;
     address BATtoken;
     mapping(address => Staker) stakerToStakes;
@@ -38,8 +37,7 @@ contract NewStakingContract {
         require(o.lastTimeStake <= block.timestamp, "You're required to have staked before");
         uint stakePeriod = block.timestamp - o.lastTimeStake;
         if(stakePeriod >= minStakePeriod){
-            uint day = getDays(stakePeriod);
-            uint bonus = (o.currentStake * 3/1000 * day);
+            uint bonus = (o.currentStake * 347/1000000000 * stakePeriod);
             o.currentStake += _amountIn + bonus;
         } else {
             o.currentStake += _amountIn;
@@ -53,8 +51,7 @@ contract NewStakingContract {
         Staker storage o = stakerToStakes[msg.sender];
         uint stakePeriod = block.timestamp - o.lastTimeStake;
         if(stakePeriod >= minStakePeriod){
-            uint day = getDays(stakePeriod);
-            uint bonus = (o.currentStake * 3/1000 * day);
+            uint bonus = (o.currentStake * 347/1000000000 * stakePeriod);
             o.currentStake += bonus;
         }
         require(o.currentStake >= _amount, "insufficient funds");
@@ -74,8 +71,7 @@ contract NewStakingContract {
         Staker storage o = stakerToStakes[msg.sender];
         uint stakePeriod = block.timestamp - o.lastTimeStake;
         if(stakePeriod >= minStakePeriod){
-            uint day = getDays(stakePeriod);
-            uint bonus = (o.currentStake * 3/1000 * day);
+            uint bonus = (o.currentStake * 347/1000000000 * stakePeriod);
             balance= o.currentStake + bonus;
         }
     }
