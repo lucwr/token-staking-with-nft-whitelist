@@ -2,11 +2,11 @@
 import { expect } from "chai";
 import { Signer } from "ethers";
 import { ethers, network } from "hardhat";
-import { BoredApeTokens, BuyBAT, NewStakingContract } from "../typechain";
+import { BoredApeTokens, BuyBAT, StakingContract } from "../typechain";
 
 let deployedBAT: BoredApeTokens;
 let deployedICU: BuyBAT;
-let stakingContract: NewStakingContract;
+let stakingContract: StakingContract;
 let signer1: Signer;
 const BOREDAPENFTContract = "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d";
 const NFTHolder = "0x720a4fab08cb746fc90e88d1924a98104c0822cf";
@@ -27,7 +27,7 @@ describe("Testing the staking contract", function () {
     );
 
     const stakingContractPreDeployed = await ethers.getContractFactory(
-      "NewStakingContract"
+      "StakingContract"
     );
     stakingContract = await stakingContractPreDeployed.deploy(
       BOREDAPENFTContract,
@@ -47,13 +47,13 @@ describe("Testing the staking contract", function () {
   it("Should not be able to stake if you don't have a bored ape nft", async function () {
     await expect(
       stakingContract.stakeTokens("200000000000000000000")
-    ).to.revertedWith("You need to have 1 Bored Ape NFT");
+    ).to.revertedWith("MustHaveBoredApeNFT");
   });
 
   it("Should not be able to stake if amount in is than 5 BAT tokens", async function () {
     await expect(
       stakingContract.connect(signer1).stakeTokens("2000000000000000000")
-    ).to.revertedWith("You need  to stake > 5 BAT tokens");
+    ).to.revertedWith("InsufficientTokens");
   });
 
   it("Should not be able to stake if you have less than 5 BAT tokens", async function () {
@@ -211,3 +211,14 @@ describe("Testing the staking contract", function () {
     );
   });
 });
+function InsufficientNFT() {
+  throw new Error("Function not implemented.");
+}
+
+function InsufficientTokens() {
+  throw new Error("Function not implemented.");
+}
+
+function MustHaveStaked() {
+  throw new Error("Function not implemented.");
+}
