@@ -1,8 +1,7 @@
 import { ethers } from "hardhat";
 
 async function DeployBAT() {
-
-// deploting the Bored ape tokens
+  // deploting the Bored ape tokens
   const BATtoken = await ethers.getContractFactory("BoredApeTokens");
   const BAT = await BATtoken.deploy();
 

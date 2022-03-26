@@ -38,9 +38,8 @@ const config: HardhatUserConfig = {
     hardhat: {
       forking: {
         url: "https://speedy-nodes-nyc.moralis.io/929155a11ae2912742ddd55e/eth/mainnet/archive",
-      }
-    }
-
+      },
+    },
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS !== undefined,

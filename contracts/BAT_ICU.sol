@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.4;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
- contract buyBAT{
+ contract BuyBAT{
     IERC20 BATtoken;
-    uint256 rate = 100;
+    uint256 rate = 50;
     uint256 minimumBuy;
     uint256 maximumBuy;
     event Buy(address by, uint256 value);

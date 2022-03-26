@@ -26,7 +26,7 @@ contract NewStakingContract {
         Staker storage o = stakerToStakes[msg.sender];
         if(o.lastTimeStake == 0){
         require (IERC721(BoredApeNFT).balanceOf(msg.sender) >= 1, "You need to have 1 Bored Ape NFT");
-        require(_amountIn >= 5* 10**18, "You need  to stake > 10 BAT tokens");
+        require(_amountIn >= 5* 10**18, "You need  to stake > 5 BAT tokens");
         require (IERC20(BATtoken).transferFrom(msg.sender, address(this), _amountIn), "Insufficient funds");
         o.owner = msg.sender;
         o.currentStake = _amountIn;
@@ -72,7 +72,8 @@ contract NewStakingContract {
         uint stakePeriod = block.timestamp - o.lastTimeStake;
         if(stakePeriod >= minStakePeriod){
             uint bonus = (o.currentStake * 347/1000000000 * stakePeriod);
-            balance= o.currentStake + bonus;
-        }
+           return balance= o.currentStake + bonus;
+        } 
+        return balance = o.currentStake;
     }
 }
