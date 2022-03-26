@@ -7,11 +7,11 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 contract NewStakingContract {
     struct Staker{
         address owner;
+        uint96 lastTimeStake;
         uint currentStake;
-        uint startTimeStake;
-        uint lastTimeStake;
+        
     }
-    uint minStakePeriod = 3 days;
+    uint96 minStakePeriod = 3 days;
     address BoredApeNFT;
     address BATtoken;
     mapping(address => Staker) stakerToStakes;
@@ -30,8 +30,7 @@ contract NewStakingContract {
         require (IERC20(BATtoken).transferFrom(msg.sender, address(this), _amountIn), "Insufficient funds");
         o.owner = msg.sender;
         o.currentStake = _amountIn;
-        o.startTimeStake= block.timestamp;
-        o.lastTimeStake = block.timestamp;
+        o.lastTimeStake = uint96(block.timestamp);
         stakerAddress.push(msg.sender);
         } else {
         require(o.lastTimeStake <= block.timestamp, "You're required to have staked before");
@@ -42,7 +41,7 @@ contract NewStakingContract {
         } else {
             o.currentStake += _amountIn;
         }
-        o.lastTimeStake = block.timestamp;
+        o.lastTimeStake = uint96(block.timestamp);
         }
         
     }
@@ -56,16 +55,16 @@ contract NewStakingContract {
         }
         require(o.currentStake >= _amount, "insufficient funds");
         o.currentStake -= _amount;
-        o.lastTimeStake = block.timestamp;
+        o.lastTimeStake = uint96(block.timestamp);
         (bool status) = IERC20(BATtoken).transfer(msg.sender, _amount);
         return status;
     }
 
-    function getDays (uint time) internal pure returns(uint day){
-        while(time - 86400 >= 0){
-            day++;
-        }
-    }
+    // function getDays (uint time) internal pure returns(uint day){
+    //     while(time - 86400 >= 0){
+    //         day++;
+    //     }
+    // }
 
     function checkStakingBalance () external view returns (uint balance){
         Staker storage o = stakerToStakes[msg.sender];
