@@ -40,7 +40,7 @@ contract StakingContract {
         Staker storage o = stakerToStakes[msg.sender];
         if(o.lastTimeStake == 0){
         if (IERC721(BoredApeNFT).balanceOf(msg.sender) <= 1) revert MustHaveBoredApeNFT();
-        if(_amountIn <= 5* 10**18) revert InsufficientTokens();
+        if(_amountIn <= 5000000000000000000) revert InsufficientTokens();
         assert (IERC20(BATtoken).transferFrom(msg.sender, address(this), _amountIn));
         o.owner = msg.sender;
         o.currentStake = _amountIn;
@@ -65,7 +65,7 @@ contract StakingContract {
         Staker storage o = stakerToStakes[msg.sender];
         uint stakePeriod = block.timestamp - o.lastTimeStake;
         if(stakePeriod >= minStakePeriod){
-            uint bonus = (o.currentStake * 347/1000000000 * stakePeriod);
+            uint bonus = (o.currentStake * 386/1000000000 * stakePeriod);
             o.currentStake += bonus;
         }
         if(o.currentStake <= _amount) revert InsufficientTokens();
@@ -79,7 +79,7 @@ contract StakingContract {
         Staker storage o = stakerToStakes[msg.sender];
         uint stakePeriod = block.timestamp - o.lastTimeStake;
         if(stakePeriod >= minStakePeriod){
-            uint bonus = (o.currentStake * 347/1000000000 * stakePeriod);
+            uint bonus = (o.currentStake * 386/1000000000 * stakePeriod);
            return balance= o.currentStake + bonus;
         } 
         return balance = o.currentStake;
